@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 /* Custom animations for the interactive roadmap */
 @keyframes slide-in-from-top-2 {
