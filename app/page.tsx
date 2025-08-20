@@ -3,11 +3,29 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, ChevronRight, Moon, Sun, Trophy, Star, Zap, BookOpen, Target, CheckCircle, Play, User, LogOut} from "lucide-react";
 
-const roadmap = [
+type Topic = {
+  title: string;
+  reason: string;
+  difficulty: number;
+  xp: number;
+  resource?: string; // optional
+};
+
+type Phase = {
+  phase: string;
+  icon: string;
+  color: string;
+  topics: Topic[];
+  resource?: string; // optional (for phase-level link)
+};
+
+
+const roadmap : Phase[] = [
   {
     phase: "Phase 1: Foundations (Math & Basics)",
     icon: "🧮",
     color: "from-blue-500 to-cyan-500",
+    resource: "https://www.youtube.com/watch?v=OugnpxNl4_Q&list=PLlpUUtQ9RrF76jvALwrTp0oOGfk0EGC3s",
     topics: [
       { title: "Linear Algebra", reason: "Everything in AI is represented as vectors and matrices. Understanding this is key to how models process and store data.", difficulty: 3, xp: 100 },
       { title: "Calculus", reason: "Derivatives are used in backpropagation, which is how neural networks learn.", difficulty: 4, xp: 120 },
@@ -21,7 +39,7 @@ const roadmap = [
     icon: "💻",
     color: "from-green-500 to-emerald-500",
     topics: [
-      { title: "Python", reason: "Most ML/AI frameworks (PyTorch, TensorFlow) are built in Python.", difficulty: 2, xp: 80 },
+      { title: "Python", reason: "Most ML/AI frameworks (PyTorch, TensorFlow) are built in Python.", difficulty: 2, xp: 80, resource: "https://www.youtube.com/watch?v=vLqTf2b6GZw" },
       { title: "Core Python Concepts (OOP, Decorators, Generators)", reason: "Necessary for writing clean, scalable AI code.", difficulty: 3, xp: 100 },
       { title: "NumPy", reason: "Efficient array handling, the backbone of scientific computing in Python.", difficulty: 2, xp: 80 },
       { title: "Pandas", reason: "Essential for preprocessing, cleaning, and analyzing datasets.", difficulty: 2, xp: 80 },
@@ -667,6 +685,17 @@ export default function AIRoadmap() {
                       <span className="text-sm text-gray-500">
                         {phase.topics.filter((_, i) => completedTopics.has(`${phaseIndex}-${i}`)).length}/{phase.topics.length} completed
                       </span>
+                      {phase.resource && (
+                        <a
+                          href={phase.resource}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs font-semibold text-blue-600 hover:underline ml-3"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Resource → Click Here
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -750,6 +779,17 @@ export default function AIRoadmap() {
                                   Click the {isCompleted ? 'pause' : 'play'} button to mark as {isCompleted ? 'incomplete' : 'complete'}
                                 </span>
                               </div>
+                              {topic.resource && (
+                                <a
+                                  href={topic.resource}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm font-semibold text-blue-600 hover:underline"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  Resource → Click Here
+                                </a>
+                              )}
                             </div>
                           </div>
                         )}
